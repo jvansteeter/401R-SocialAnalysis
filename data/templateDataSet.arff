@@ -1,0 +1,7 @@
+@relation template
+
+@attribute content string
+@attribute Class {false, true}
+
+@data
+'<template>','false'
