@@ -5,7 +5,7 @@ import weka.core.SerializationHelper;
 import weka.core.converters.ArffLoader;
 
 import java.io.*;
-import java.net.Socket;
+import java.net.*;
 
 public class ConnectionHandler implements Runnable
 {
@@ -41,6 +41,10 @@ public class ConnectionHandler implements Runnable
                 System.out.println(socket.getInetAddress() + ": " + tweet);
                 System.out.println("\tPrediction: " + (prediction == 0.0 ? "False" : "True"));
                 out.println(prediction == 0.0 ? "False" : "True");
+                if (prediction == 1.0)
+                {
+                    liveUpdate();
+                }
             }
         }
         catch (Exception e)
@@ -56,5 +60,33 @@ public class ConnectionHandler implements Runnable
                 e1.printStackTrace();
             }
         }
+    }
+
+    private void liveUpdate() throws IOException
+    {
+        System.out.println("Live update");
+        String rawData = "update";
+        String type = "application/x-www-form-urlencoded";
+//        String encodedData = URLEncoder.encode(rawData, "UTF-8");
+        URL url = new URL("http://localhost:3030/liveupdate");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setDoOutput(true);
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", type);
+        connection.setRequestProperty("charset", "utf-8");
+        connection.setRequestProperty("Content-Length", Integer.toString(rawData.getBytes().length));
+        OutputStream os = connection.getOutputStream();
+        os.write(rawData.getBytes());
+        os.flush();
+
+        String response;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        while ((response = reader.readLine()) != null)
+        {
+            System.out.println(response);
+        }
+        os.close();
+        reader.close();
     }
 }

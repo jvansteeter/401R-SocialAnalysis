@@ -12,12 +12,6 @@ public class Main
 {
     public static void main(String[] args)
     {
-//        SentimentAnalyzer test = new SentimentAnalyzer();
-//        test.findSentiment("I hate everything so freaking much!");
-//        MultilayerPerceptron perceptron = new MultilayerPerceptron();
-//        perceptron.run();
-//        ArffLoader loader = new ArffLoader();
-//        loader.
         try
         {
 //Reading training arff file
@@ -101,23 +95,9 @@ public class Main
 //            layer2.setDist(normalDistribution1);
 //            lia.setLayers(new Layer[]{layer1, layer2});
 
-
-
-//            Dl4jMlpClassifier lia = (Dl4jMlpClassifier) SerializationHelper.read("lia.model");
-            FilteredClassifier svm = (FilteredClassifier) SerializationHelper.read("svm5.model");
-//            System.out.println("Options Set");
+            FilteredClassifier svm = (FilteredClassifier) SerializationHelper.read("svm.model");
             dataSet.setClassIndex(1);
-//            instances.setClassIndex(1);
-//            lia.buildClassifier(dataSet);
-//            System.out.println("Model has been build");
-//            SerializationHelper.write("data/lia1.model", lia);
-//            System.out.println("Model has been saved");
 
-
-//            MultilayerPerceptron mlp = new MultilayerPerceptron();
-//            Dl4jMlpClassifier lia = (Dl4jMlpClassifier) (new ObjectInputStream(new FileInputStream("lia.model"))).readObject();
-//            SerializedClassifier lia = new SerializedClassifier();
-//            lia.setModelFile(new File("lia.model"));
             int correct = 0;
             int incorrect = 0;
             int threats = 0;
@@ -152,20 +132,6 @@ public class Main
             System.out.println("Threats: " + threats);
             System.out.println("%: " + (double)correct/(double)(incorrect + correct));
             System.out.println("%: " + (double)correctThreats/(double)(threats));
-
-//Setting Parameters
-//            mlp.setLearningRate(0.1);
-//            mlp.setMomentum(0.2);
-//            mlp.setTrainingTime(5);
-//            mlp.setHiddenLayers("3");
-//
-//            mlp.buildClassifier(train);
-//
-//            loader.setFile(new File("test.csv"));
-//            Instance test2 = loader.getNextInstance(train);
-//
-//
-//            System.out.println(mlp.classifyInstance(test2));
         }
         catch (Exception ex)
         {
